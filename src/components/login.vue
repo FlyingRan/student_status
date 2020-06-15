@@ -8,7 +8,7 @@
       label-width="100px"
       class="demo-ruleForm"
     >
-      <el-form-item>
+      <el-form-item label="登陆身份">
         <el-select placeholder="请选择登录身份" v-model="logindata.identity">
           <el-option label="管理员" value="admin"></el-option>
           <el-option label="学生" value="student"></el-option>
@@ -23,7 +23,8 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('logindata')">提交</el-button>
+        <el-checkbox v-model="logindata.autologin" size="medium" border>自动登录</el-checkbox>
+        <el-button type="primary" @click="submitForm('logindata')">登录</el-button>
         <el-button @click="resetForm('logindata')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -50,7 +51,8 @@ export default {
       logindata: {
         username: "",
         password: "",
-        identity: ""
+        identity: "",
+        autologin: false
       },
       rules2: {
         username: [{ validator: validateUser, trigger: "blur" }],
@@ -59,33 +61,46 @@ export default {
     };
   },
   methods: {
-    
     submitForm(formName) {
       // const self = this;
       // console.log(username)
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$store.commit({
-            type: "changeiden",
-            identity: this.logindata.identity
-          });
           console.log("success");
-          // console.log(this.logindata.identity);
 
-          // console.log(self.logindata.username);
-
-          this.$router.push("/home").catch(err => {
-            err;
-          });
-          // that.$axios
-          //   .get("/api/phpvue/test.php")
-          //   .then(res => {
-          //     console.log(res);
-          //   })
-          //   .catch(err => {
-          //     console.log("出错");
-          //     console.log(err);
-          //   });
+          this.$axios
+            .post(
+              "/api/phpvue/login.php",
+              this.$qs.stringify({
+                username: this.logindata.username,
+                password: this.logindata.password,
+                identity: this.logindata.identity
+              })
+            )
+            .then(res => {
+              if (res.status == 200) {
+                
+                if (res.data == 0) {
+                  this.$message.error("用户名或者密码错误，再想想吧！");
+                } else {
+                  // console.log(res.data.sid);
+                  this.$store.commit({
+                    type: "changeuser",
+                    data: res.data,
+                    identity:this.logindata.identity
+                  });
+                  this.$router.push("/home").catch(err => {
+                    err;
+                  });
+                }
+              } else {
+                this.$message.error("服务器异常，请稍后再试");
+              }
+            })
+            .catch(err => {
+              console.log("出错");
+              console.log(err);
+            });
         } else {
           console.log("error submit!!");
           return false;
@@ -94,8 +109,7 @@ export default {
     },
     resetForm(formName) {
       this.$refs[formName].resetFields();
-    },
-    
+    }
   }
 };
 </script>
