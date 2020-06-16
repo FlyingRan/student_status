@@ -66,7 +66,7 @@
           <i class="el-icon-arrow-right"></i>
           <span>{{tabArray[1]}}</span>
         </div>
-        <span style="line-height:50px; font-size:15px;margin-left:1000px;">
+        <span style="line-height:50px; font-size:15px;margin-left:900px;">
           <el-dropdown>
             <i class="el-icon-setting" style="margin-right: 15px"></i>
             <el-dropdown-menu slot="dropdown">
@@ -144,7 +144,19 @@ export default {
     // if(this.$store.password="123456"){
       
     // }
-
+    this.$axios.get("/api/phpvue/allsearch.php").then(res => {
+      // console.log(res.data.length);
+      // console.log(res);
+      // for (let x in res.data) {
+        // this.realresults.push(res.data[x]);
+        //  console.log(x);
+      // }
+      
+        this.$store.commit({
+          type:'commitresults',
+          realresults:res.data
+        })
+    })
   }
 };
 </script>

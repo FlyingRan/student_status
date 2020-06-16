@@ -78,8 +78,7 @@ export default {
               })
             )
             .then(res => {
-              if (res.status == 200) {
-                
+              if (res.status == 200) {  
                 if (res.data == 0) {
                   this.$message.error("用户名或者密码错误，再想想吧！");
                 } else {

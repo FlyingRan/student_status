@@ -15,7 +15,8 @@ export default new Vuex.Store({
     ecard:'',
     inyear:'',
     state:'',
-    pulishment:''
+    pulishment:'',
+    realresults:[]
   },
   mutations: {
     changeuser(state,payload){
@@ -34,11 +35,27 @@ export default new Vuex.Store({
       // console.log(state.identity);
       // console.log(state.username);
     },
-    changeusername(state,payload){
-      state.username=payload.username;
+    // changeusername(state,payload){
+    //   state.username=payload.username;
+    // },
+    // changepassword(state,payload){
+    //   state.password=payload.password;
+    // },
+    commitresults(state,payload){
+      for(let i=0;i<payload.realresults.length;i++){
+        state.realresults.push(payload.realresults[i]);
+      }
     },
-    changepassword(state,payload){
-      state.password=payload.password;
+    addstudent(state,payload){
+      state.realresults.push(payload.student);
+    },
+    deletestudent(state,payload){
+      for(let i=0;i<state.realresults.length;i++){
+        if(state.realresults[i].sid == payload.student.sid){
+          state.realresults.splice(i,1);
+          break;
+        }
+      }
     }
   },
   actions: {

@@ -80,7 +80,7 @@ export default {
         class: "",
         inyear: ""
       },
-      realresults: [],
+      realresults: this.$store.state.realresults,
       results: [],
       currentpage: 1,
       currentpagesize: 8
@@ -155,14 +155,13 @@ export default {
     }
   },
   created() {
-    this.$axios.get("/api/phpvue/search.php").then(res => {
-      console.log(res.data.length);
-      console.log(res);
-      for (let x in res.data) {
-        this.realresults.push(res.data[x]);
-        //  console.log(x);
-      }
-
+    // this.$axios.get("/api/phpvue/allsearch.php").then(res => {
+    //   console.log(res.data.length);
+    //   console.log(res);
+    //   for (let x in res.data) {
+    //     this.realresults.push(res.data[x]);
+    //     //  console.log(x);
+    //   }
       for (
         let i = (this.currentpage - 1) * this.currentpagesize - 1;
         i < this.realresults.length && i < this.currentpagesize;
@@ -171,7 +170,7 @@ export default {
         this.results.push(this.realresults[i]);
       }
       // this.results=[];
-    });
+    // });
   }
 };
 </script>
