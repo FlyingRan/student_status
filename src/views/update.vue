@@ -12,7 +12,7 @@
         </el-input>
       </div>
       <div class="buttons">
-        <el-button type="primary" round  @click="showall">显示全部内容</el-button>
+        <el-button type="primary" round @click="showall">显示全部内容</el-button>
         <dialogs />
       </div>
 
@@ -31,23 +31,32 @@
 
           <el-table-column label="操作" width="300px">
             <template slot-scope="scope">
+              <el-button size="mini" @click="handlecheck(scope.$index, scope.row)">查看详情</el-button>
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+
               <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-              <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">查看详情</el-button>
             </template>
           </el-table-column>
         </el-table>
+        <check :visible="checkvisible" :detaildata="detaildata" @changevis="changevis" />
+        <update
+          :index="index"
+          :updatevisible="updatevisible"
+          :msg="updatedata"
+          @changeupdate="changeupdate"
+        />
+        <deletes  :deletevisible="deletevisible" :deletedata="deletedata" @deleteclose="deleteclose"/>
         <div class="block">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentpage"
-          :page-sizes="[6, 8, 10, 12]"
-          :page-size="currentpagesize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="this.realresults.length"
-        ></el-pagination>
-      </div>
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="currentpage"
+            :page-sizes="[6, 8, 10, 12]"
+            :page-size="currentpagesize"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="this.realresults.length"
+          ></el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -55,18 +64,26 @@
 
 <script>
 import dialogs from "@components/dialog/dialog";
-
+import check from "@components/dialog/check";
+import update from "@components/dialog/updatedialog";
+import deletes from "@components/dialog/deletedialog";
 export default {
   data() {
     return {
-      currentpage:1,
-      currentpagesize:8,
+      currentpage: 1,
+      currentpagesize: 8,
       isstudent: false,
       search: "",
-
       select: "",
       results: [],
-      realresults:this.$store.state.realresults
+      realresults: this.$store.state.realresults,
+      checkvisible: false,
+      updatevisible: false,
+      deletevisible:false,
+      detaildata: {},
+      updatedata: {},
+      deletedata:{},
+      index: 0
     };
   },
   methods: {
@@ -78,16 +95,15 @@ export default {
           }
         })
         .then(res => {
-          if(res.data!=0){
-            this.results=[]
+          if (res.data != 0) {
+            this.results = [];
             this.results.push(res.data);
-            }
-          else{
-            this.$message.error('查无此人，请重新输入信息');
+          } else {
+            this.$message.error("查无此人，请重新输入信息");
           }
         });
     },
-   handleCurrentChange(page) {
+    handleCurrentChange(page) {
       console.log(page);
 
       this.results = [];
@@ -122,36 +138,75 @@ export default {
         // console.log(i);
       }
     },
-    showall(){
-      this.results=[];
-      for(let i=0;i<this.realresults.length;i++){
+    showall() {
+      this.results = [];
+      for (let i = 0; i < this.realresults.length; i++) {
         this.results.push(this.realresults[i]);
       }
       this.handleCurrentChange(1);
+    },
+    //处理编辑按钮
+    handlecheck(index, row) {
+      this.checkvisible = true;
+      console.log(this.checkvisible);
+
+      // console.log(this.realresults[2]);
+      this.detaildata = row;
+    },
+    handleEdit(index, row) {
+      this.updatevisible = true;
+      this.updatedata = row;
+      this.index = index;
+    },
+    handleDelete(index, row) {
+      this.deletevisible=true,
+      this.deletedata=row;
+    },
+    changevis(val) {
+      this.checkvisible = !val;
+      // console.log(this.checkvisible);
+    },
+    changeupdate(val) {
+      this.updatevisible = val;
+    },
+    deleteclose(val){
+      this.deletevisible=val;
     }
   },
   components: {
-    dialogs
+    dialogs,
+    check,
+    update,
+    deletes
   },
   created() {
     if (this.$store.state.identity == "student") this.isstudent = true;
 
-    
+    for (
+      let i = (this.currentpage - 1) * this.currentpagesize;
+      i < this.realresults.length && i < this.currentpagesize;
+      i++
+    ) {
+      this.results.push(this.realresults[i]);
+      console.log(i);
+      // console.log(this.realresults.length;);
+    }
 
-      for (
-        let i = (this.currentpage - 1) * this.currentpagesize;
-        i < this.realresults.length && i < this.currentpagesize;
-        i++
-      ) {
-        this.results.push(this.realresults[i]);
-        console.log(i);
-        // console.log(this.realresults.length;);
-      }
-     
-      
-      // this.results=[];
-
-  }
+    // this.results=[];
+  },
+ watch: {
+  realresults:{ //深度监听，可监听到对象、数组的变化
+      handler (newV, oldV) {
+        // do something, 可使用this
+        this.realresults=newV
+        // console.log(oldV);
+        this.handleCurrentChange(this.currentpage)
+        // console.log(newV);
+        
+      },
+      deep:true
+     }
+},
 };
 </script>
 
@@ -163,7 +218,7 @@ export default {
 .buttons {
   margin-top: 50px;
 }
-.block{
+.block {
   text-align: center;
 }
 </style>

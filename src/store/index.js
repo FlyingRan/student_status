@@ -35,12 +35,6 @@ export default new Vuex.Store({
       // console.log(state.identity);
       // console.log(state.username);
     },
-    // changeusername(state,payload){
-    //   state.username=payload.username;
-    // },
-    // changepassword(state,payload){
-    //   state.password=payload.password;
-    // },
     commitresults(state,payload){
       for(let i=0;i<payload.realresults.length;i++){
         state.realresults.push(payload.realresults[i]);
@@ -52,14 +46,27 @@ export default new Vuex.Store({
     deletestudent(state,payload){
       for(let i=0;i<state.realresults.length;i++){
         if(state.realresults[i].sid == payload.student.sid){
-          state.realresults.splice(i,1);
+          // console.log(payload.student.sid);
+          // console.log(payload.student.name)
+          console.log(state.realresults);
+          
+          Vue.delete(state.realresults,i)
+
+          console.log(state.realresults);
+          
+          // state.realresults.splice(i,1);
+          // console.log(state.realresults[i-1]);
           break;
         }
       }
+    },
+    updatastudent(state,payload){
+      state.realresults[payload.index]=payload.msg;
     }
   },
   actions: {
   },
   modules: {
   }
+
 })
