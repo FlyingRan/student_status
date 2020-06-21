@@ -108,7 +108,7 @@ export default {
 
       this.results = [];
       this.currentpage = page;
-      console.log(this.currentpage);
+      // console.log(this.currentpage);
 
       for (
         let i = (page - 1) * this.currentpagesize;
@@ -117,7 +117,7 @@ export default {
         i++
       ) {
         this.results.push(this.realresults[i]);
-        // console.log(i);
+        // console.log(this.realresults[i]);
       }
     },
     //表格显示数量发送切换
@@ -188,7 +188,7 @@ export default {
       i++
     ) {
       this.results.push(this.realresults[i]);
-      console.log(i);
+      // console.log(i);
       // console.log(this.realresults.length;);
     }
 
@@ -198,15 +198,14 @@ export default {
   realresults:{ //深度监听，可监听到对象、数组的变化
       handler (newV, oldV) {
         // do something, 可使用this
-        this.realresults=newV
+        // this.realresults=newV
         // console.log(oldV);
         this.handleCurrentChange(this.currentpage)
         // console.log(newV);
-        
       },
       deep:true
      }
-},
+  },
 };
 </script>
 

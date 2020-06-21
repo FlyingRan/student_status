@@ -80,7 +80,7 @@ export default {
       addmsg: {
         sid: "",
         name: "",
-        sexx: "",
+        sex: "",
         ecard: "",
         college: "",
         major_class: "",
@@ -98,8 +98,20 @@ export default {
     confirmadd() {
       this.confirminner = false;
       this.outer = false;
-      console.log(this.addmsg.id, this.addmsg.college);
+      var that =this;
+      // console.log(this.addmsg.sid,this.addmsg.name,this.addmsg.college,this.addmsg.inyear);//正常输出
+      // console.log(this.addmsg);//部分输出为空
+      var astudent={};
+      astudent.sid=this.addmsg.sid;
+      astudent.name=this.addmsg.name;
+      astudent.college=this.addmsg.college;
+      astudent.inyear=this.addmsg.inyear;
+      astudent.major_class=this.addmsg.major_class;
+      astudent.sex=this.addmsg.sex;
+      astudent.ecard=this.addmsg.ecard;
 
+      // console.log(student);
+      
       //通过axios发送添加请求
       this.$axios
         .get("/api/phpvue/addstudent.php", {
@@ -114,27 +126,29 @@ export default {
           }
         })
         .then(res => {
+          // console.log(this.addmsg);
           if (res.data == "success") {
             this.$message({
               type: "success",
               message: "添加成功！"
-            });
+            });       
+            // console.log(this.addmsg.inyear); //部分输出为空    
             this.$store.commit({
               type: "addstudent",
               student: {
-                sid: this.addmsg.sid,
-                name: this.addmsg.name,
-                sex: this.addmsg.sex,
-                ecard: this.addmsg.ecard,
-                college: this.addmsg.college,
-                major_class: this.addmsg.major_class,
-                inyear: this.addmsg.inyear
+                sid: astudent.sid,
+                name: astudent.name,
+                sex: astudent.sex,
+                ecard: astudent.ecard,
+                college: astudent.college,
+                major_class: astudent.major_class,
+                inyear: astudent.inyear
               }
             });
           } else {
             this.$message({
               type: "info",
-              message: res.data
+              message: 'error'
             });
           }
         });

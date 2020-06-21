@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <el-card class="searchform">
       <el-form :model="data" class="demo-form-inline" ref="data">
         <el-form-item label="学生学号" prop="id">
@@ -176,6 +176,10 @@ export default {
 </script>
 
 <style>
+.container{
+  width: 1300px;
+  /* border:1px solid red; */
+}
 .searchform {
   width: 30%;
   /* border:1px solid red; */
@@ -184,7 +188,8 @@ export default {
   height: 700px;
 }
 .searchresults {
-  width: 68%;
+  margin-left: 450px;
+  width: 65%;
   /* border:1px solid green; */
   height: 700px;
 }

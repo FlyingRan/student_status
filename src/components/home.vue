@@ -24,6 +24,9 @@
           <el-menu-item-group title="修改">
             <el-menu-item index="学籍信息修改">学籍信息修改</el-menu-item>
           </el-menu-item-group>
+          <el-menu-item-group title="处分">
+            <el-menu-item index="处分添加与撤销">处分添加与撤销</el-menu-item>
+          </el-menu-item-group>
         </el-submenu>
         <el-submenu index="高级">
           <template slot="title">
@@ -32,7 +35,7 @@
           <el-menu-item-group>
             <template slot="title">学生高级查询</template>
             <el-menu-item index="男女比例">男女比例</el-menu-item>
-            <el-menu-item index="年龄">年龄</el-menu-item>
+            <el-menu-item index="处分占比">处分占比</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </el-menu>
@@ -87,6 +90,9 @@
         <div>
           <update v-if="tab === '学籍信息修改'"></update>
           <search v-else-if="tab === '学籍信息查询'"></search>
+          <sexchart v-else-if="tab === '男女比例'"></sexchart>
+          <pulishmentchart v-else-if="tab === '处分占比'"></pulishmentchart>
+          <pulishment v-else-if="tab === '处分添加与撤销'"></pulishment>
           <control v-else></control>
         </div>
       </el-main>
@@ -110,16 +116,12 @@
 import control from "@views/control";
 import update from "@views/update";
 import search from "@views/search";
-
+import sexchart from "@views/sexchart";
+import pulishmentchart from "@views/pulishmentchart";
+import pulishment from "@views/pulishment"
 export default {
   data() {
-    const item = {
-      date: "2020-6-1",
-      name: "许七安",
-      address: "地球"
-    };
     return {
-      tableData: Array(20).fill(item),
       tab: "",
       tabArray: ["主页", "控制台"]
     };
@@ -137,7 +139,10 @@ export default {
   components: {
     search,
     control,
-    update
+    update,
+    sexchart,
+    pulishmentchart,
+    pulishment
   },
   created(){
     //判断是否为初始密码

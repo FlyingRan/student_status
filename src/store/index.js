@@ -41,19 +41,19 @@ export default new Vuex.Store({
       }
     },
     addstudent(state,payload){
-      state.realresults.push(payload.student);
+      // state.realresults.push();
+      Vue.set(state.realresults,state.realresults.length,payload.student)
+      // console.log(payload.student);
+      
     },
     deletestudent(state,payload){
       for(let i=0;i<state.realresults.length;i++){
         if(state.realresults[i].sid == payload.student.sid){
           // console.log(payload.student.sid);
           // console.log(payload.student.name)
-          console.log(state.realresults);
-          
+          // console.log(state.realresults);
           Vue.delete(state.realresults,i)
-
-          console.log(state.realresults);
-          
+          // console.log(state.realresults);       
           // state.realresults.splice(i,1);
           // console.log(state.realresults[i-1]);
           break;
@@ -62,6 +62,14 @@ export default new Vuex.Store({
     },
     updatastudent(state,payload){
       state.realresults[payload.index]=payload.msg;
+    },
+    updatepulishment(state,payload){
+      for(let x in state.realresults){
+        if(state.realresults[x].sid == payload.sid){
+          state.realresults[x].pulishment = payload.pulishment;
+          break;
+        }
+      }
     }
   },
   actions: {
