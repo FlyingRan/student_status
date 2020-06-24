@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isstudent">对不起，你的身份是学生，没有权限修改他人的学籍噢</div>
+    <div v-if="isstudent"><power /></div>
     <div v-else>
       <div style="margin-top: 15px; width:500px">
         <el-input placeholder="请输入查询信息" v-model="search" class="input-with-select" size="medium">
@@ -61,12 +61,12 @@
     </div>
   </div>
 </template>
-
 <script>
 import dialogs from "@components/dialog/dialog";
 import check from "@components/dialog/check";
 import update from "@components/dialog/updatedialog";
 import deletes from "@components/dialog/deletedialog";
+import power from "@views/powerpage"
 export default {
   data() {
     return {
@@ -177,7 +177,8 @@ export default {
     dialogs,
     check,
     update,
-    deletes
+    deletes,
+    power
   },
   created() {
     if (this.$store.state.identity == "student") this.isstudent = true;

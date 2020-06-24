@@ -66,7 +66,7 @@ export default {
       // console.log(username)
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log("success");
+          // console.log("success");
 
           this.$axios
             .post(
@@ -82,7 +82,7 @@ export default {
                 if (res.data == 0) {
                   this.$message.error("用户名或者密码错误，再想想吧！");
                 } else {
-                  // console.log(res.data.sid);
+                  console.log(res.data);
                   this.$store.commit({
                     type: "changeuser",
                     data: res.data,
@@ -95,6 +95,8 @@ export default {
               } else {
                 this.$message.error("服务器异常，请稍后再试");
               }
+              // console.log(res.data);
+              
             })
             .catch(err => {
               console.log("出错");

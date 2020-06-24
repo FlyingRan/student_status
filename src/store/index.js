@@ -22,9 +22,9 @@ export default new Vuex.Store({
     changeuser(state,payload){
       // console.log(payload.identity);
       state.identity=payload.identity;
-      state.username=payload.data.sid;
+      state.username=payload.data.sid || payload.data.username;
       state.password=payload.data.password;
-      state.realname=payload.data.name;
+      state.realname=payload.data.name || payload.data.college;
       state.sex=payload.data.sex;
       state.college=payload.data.college;
       state.major_class=payload.data.major_class;
@@ -33,9 +33,12 @@ export default new Vuex.Store({
       state.state=payload.data.state;
       state.pulishment=payload.data.pulishment;
       // console.log(state.identity);
-      // console.log(state.username);
+      // console.log(payload.data.sid);
+      // console.log(payload.data.name);
+      
     },
     commitresults(state,payload){
+      state.realresults=[]
       for(let i=0;i<payload.realresults.length;i++){
         state.realresults.push(payload.realresults[i]);
       }
