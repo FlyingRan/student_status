@@ -53,8 +53,8 @@ export default {
         return {};
       }
     },
-    index:{
-      type:Number
+    index: {
+      type: Number
     }
   },
   methods: {
@@ -67,7 +67,6 @@ export default {
     },
     confirmaupdate() {
       this.$emit("changeupdate", !this.updatevisible);
-
       //发起修改请求
       this.$axios
         .get("/api/phpvue/updatedata.php", {
@@ -93,10 +92,10 @@ export default {
             //   msg:this.msg,
             //   index:this.index
             // })
-          }else{
+          } else {
             //提示修改失败
             console.log(res);
-            
+
             this.$message({
               type: "error",
               message: "修改失败，服务器异常！"

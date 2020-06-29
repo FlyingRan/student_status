@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="isstudent"><power /></div>
+    <div v-if="isstudent">
+      <power />
+    </div>
     <div v-else>
       <div style="margin-top: 15px; width:500px">
         <el-input placeholder="请输入查询信息" v-model="search" class="input-with-select" size="medium">
@@ -45,7 +47,11 @@
           :msg="updatedata"
           @changeupdate="changeupdate"
         />
-        <deletes  :deletevisible="deletevisible" :deletedata="deletedata" @deleteclose="deleteclose"/>
+        <deletes
+          :deletevisible="deletevisible"
+          :deletedata="deletedata"
+          @deleteclose="deleteclose"
+        />
         <div class="block">
           <el-pagination
             @size-change="handleSizeChange"
@@ -66,7 +72,7 @@ import dialogs from "@components/dialog/dialog";
 import check from "@components/dialog/check";
 import update from "@components/dialog/updatedialog";
 import deletes from "@components/dialog/deletedialog";
-import power from "@views/powerpage"
+import power from "@views/powerpage";
 export default {
   data() {
     return {
@@ -79,10 +85,10 @@ export default {
       realresults: this.$store.state.realresults,
       checkvisible: false,
       updatevisible: false,
-      deletevisible:false,
+      deletevisible: false,
       detaildata: {},
       updatedata: {},
-      deletedata:{},
+      deletedata: {},
       index: 0
     };
   },
@@ -154,13 +160,19 @@ export default {
       this.detaildata = row;
     },
     handleEdit(index, row) {
-      this.updatevisible = true;
-      this.updatedata = row;
-      this.index = index;
+      if (row.college != this.$store.state.college) {
+        this.$message({
+          type: "warning",
+          message: "对不起，你没有权限修改其他学院的学生信息"
+        });
+      } else {
+        this.updatevisible = true;
+        this.updatedata = row;
+        this.index = index;
+      }
     },
     handleDelete(index, row) {
-      this.deletevisible=true,
-      this.deletedata=row;
+      (this.deletevisible = true), (this.deletedata = row);
     },
     changevis(val) {
       this.checkvisible = !val;
@@ -169,8 +181,8 @@ export default {
     changeupdate(val) {
       this.updatevisible = val;
     },
-    deleteclose(val){
-      this.deletevisible=val;
+    deleteclose(val) {
+      this.deletevisible = val;
     }
   },
   components: {
@@ -195,18 +207,19 @@ export default {
 
     // this.results=[];
   },
- watch: {
-  realresults:{ //深度监听，可监听到对象、数组的变化
-      handler (newV, oldV) {
+  watch: {
+    realresults: {
+      //深度监听，可监听到对象、数组的变化
+      handler(newV, oldV) {
         // do something, 可使用this
         // this.realresults=newV
         // console.log(oldV);
-        this.handleCurrentChange(this.currentpage)
+        this.handleCurrentChange(this.currentpage);
         // console.log(newV);
       },
-      deep:true
-     }
-  },
+      deep: true
+    }
+  }
 };
 </script>
 

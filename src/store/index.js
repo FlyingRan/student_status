@@ -20,7 +20,8 @@ export default new Vuex.Store({
   },
   mutations: {
     changeuser(state,payload){
-      // console.log(payload.identity);
+      console.log(payload.data.college);
+      
       state.identity=payload.identity;
       state.username=payload.data.sid || payload.data.username;
       state.password=payload.data.password;
@@ -35,7 +36,7 @@ export default new Vuex.Store({
       // console.log(state.identity);
       // console.log(payload.data.sid);
       // console.log(payload.data.name);
-      
+      console.log(state.college);
     },
     commitresults(state,payload){
       state.realresults=[]
