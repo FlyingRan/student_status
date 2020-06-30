@@ -30,6 +30,7 @@
           <el-table-column prop="major_class" label="班级"></el-table-column>
           <el-table-column prop="inyear" label="入学年份"></el-table-column>
           <el-table-column prop="pulishment" label="处分情况"></el-table-column>
+          <el-table-column prop="education" label="学历"></el-table-column>
 
           <el-table-column label="操作" width="300px">
             <template slot-scope="scope">
@@ -160,7 +161,10 @@ export default {
       this.detaildata = row;
     },
     handleEdit(index, row) {
-      if (row.college != this.$store.state.college) {
+      // console.log(row);
+      // console.log(this.$store.state.identity);
+      
+      if (row.college != this.$store.state.college && this.$store.state.identity!='admin') {
         this.$message({
           type: "warning",
           message: "对不起，你没有权限修改其他学院的学生信息"

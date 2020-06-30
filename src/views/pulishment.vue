@@ -139,6 +139,8 @@ export default {
     }
   },
   created() {
+    // console.log(this.$store.state.identity);
+    
     if (this.$store.state.identity == "student") this.isstudent = true;
   }
 };

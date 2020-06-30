@@ -1,7 +1,7 @@
 <template>
   <span>
     <el-button type="success" @click="outer = true" round>添加学生学籍</el-button>
-    <el-dialog title="学生学籍信息" :visible.sync="outer" center>
+    <el-dialog title="学生学籍信息" :visible.sync="outer" center :close-on-press-escape=false :show-close=false>
       <el-form :model="addmsg">
         <el-form-item label="学生学号" prop="sid">
           <el-input v-model="addmsg.sid" placeholder="请输入学号"></el-input>
@@ -19,6 +19,9 @@
           <el-select v-model="addmsg.college" placeholder="请选择所属学院">
             <el-option label="计算机与通信学院" value="计算机与通信学院"></el-option>
             <el-option label="外国语学院" value="外国语学院"></el-option>
+            <el-option label="管理学院" value="管理学院"></el-option>
+            <el-option label="机械学院" value="机械学院"></el-option>
+            <el-option label="电气学院" value="电气学院"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="专业班级" prop="major_class">
@@ -32,6 +35,12 @@
             <el-option label="2017" value="2017"></el-option>
             <el-option label="2016" value="2016"></el-option>
             <el-option label="2015" value="2015"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="学历" prop="education">
+          <el-select v-model="addmsg.education" placeholder="请选择学历">
+            <el-option label="本科" value="本科"></el-option>
+            <el-option label="硕士" value="硕士"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -51,6 +60,7 @@
             <li>学生学院：{{addmsg.college}}</li>
             <li>学生班级：{{addmsg.major_class}}</li>
             <li>学生入学年份：{{addmsg.inyear}}</li>
+            <li>学生学历：{{addmsg.education}}</li>
           </ul>
           <div slot="footer" class="dialog-footer">
             <el-button @click="confirmcancel">取 消</el-button>
@@ -84,13 +94,14 @@ export default {
         ecard: "",
         college: "",
         major_class: "",
-        inyear: ""
+        inyear: "",
+        education:''
       }
     };
   },
   methods: {
     confirmcancel() {
-      console.log(this.confirminner);
+      // console.log(this.confirminner);
 
       this.confirminner = false;
       this.outer = true;
@@ -109,11 +120,11 @@ export default {
       astudent.major_class = this.addmsg.major_class;
       astudent.sex = this.addmsg.sex;
       astudent.ecard = this.addmsg.ecard;
-
+      astudent.education = this.addmsg.education;
       // console.log(student);
       // console.log(this.$store.state.identity ,astudent.college);
       
-      if (this.$store.state.college == astudent.college) {
+      if (this.$store.state.college == astudent.college || this.$store.state.identity=='admin') {
         //通过axios发送添加请求
         this.$axios
           .get("/api/phpvue/addstudent.php", {
@@ -124,11 +135,12 @@ export default {
               ecard: this.addmsg.ecard,
               college: this.addmsg.college,
               major_class: this.addmsg.major_class,
-              inyear: this.addmsg.inyear
+              inyear: this.addmsg.inyear,
+              education: this.addmsg.education
             }
           })
           .then(res => {
-            // console.log(this.addmsg);
+            // console.log(res);
             if (res.data == "success") {
               this.$message({
                 type: "success",
@@ -144,7 +156,9 @@ export default {
                   ecard: astudent.ecard,
                   college: astudent.college,
                   major_class: astudent.major_class,
-                  inyear: astudent.inyear
+                  inyear: astudent.inyear,
+                  pulishment:'0',
+                  education:astudent.education
                 }
               });
             } else {
@@ -179,6 +193,7 @@ export default {
       this.addmsg.college = "";
       this.addmsg.class = "";
       this.addmsg.inyear = "";
+      this.addmsg.education='';
     }
   }
 };

@@ -16,11 +16,12 @@ export default new Vuex.Store({
     inyear:'',
     state:'',
     pulishment:'',
+    education:'',
     realresults:[]
   },
   mutations: {
     changeuser(state,payload){
-      console.log(payload.data.college);
+      // console.log(payload.data.college);
       
       state.identity=payload.identity;
       state.username=payload.data.sid || payload.data.username;
@@ -33,10 +34,11 @@ export default new Vuex.Store({
       state.inyear=payload.data.inyear;
       state.state=payload.data.state;
       state.pulishment=payload.data.pulishment;
+      state.education=payload.data.education;
       // console.log(state.identity);
       // console.log(payload.data.sid);
       // console.log(payload.data.name);
-      console.log(state.college);
+      // console.log(state.college);
     },
     commitresults(state,payload){
       state.realresults=[]

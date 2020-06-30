@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="提示" :visible.sync="deletevisible" width="30%">
+  <el-dialog title="提示" :visible.sync="deletevisible" width="30%" :close-on-press-escape=false :show-close=false>
     <span>你确定要删除吗？</span>
     <span slot="footer" class="dialog-footer">
       <el-button @click="close">取 消</el-button>

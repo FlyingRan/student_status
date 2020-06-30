@@ -1,5 +1,9 @@
 <template>
-  <div class="container">
+<div>
+<div v-if="isstudent">
+      <power />
+    </div>
+  <div v-else class="container">
     <el-card class="searchform">
       <el-form :model="data" class="demo-form-inline" ref="data">
         <el-form-item label="学生学号" prop="id">
@@ -36,6 +40,13 @@
             <el-option label="2015" value="2015"></el-option>
           </el-select>
         </el-form-item>
+         <el-form-item label="学历" prop="education">
+          <el-select v-model="data.education" placeholder="请选择学历">
+            <el-option label="全部" value=""></el-option>
+            <el-option label="本科" value="本科"></el-option>
+            <el-option label="硕士" value="硕士"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="startsearch">搜索</el-button>
           <el-button @click="resetForm('data')">重置</el-button>
@@ -51,13 +62,14 @@
         <el-table-column prop="college" label="学院"></el-table-column>
         <el-table-column prop="major_class" label="班级"></el-table-column>
         <el-table-column prop="inyear" label="入学年份"></el-table-column>
+        <el-table-column prop="education" label="学历"></el-table-column>
       </el-table>
       <div class="block">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentpage"
-          :page-sizes="[6, 8, 10, 12]"
+          :page-sizes="[4,6, 8, 10]"
           :page-size="currentpagesize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="realresults.length"
@@ -65,12 +77,18 @@
       </div>
     </el-card>
   </div>
+  </div>
 </template>
 
 <script>
+import power from '@views/powerpage'
 export default {
+  components:{
+    power
+  },
   data() {
     return {
+      isstudent:false,
       data: {
         id: "",
         name: "",
@@ -78,7 +96,8 @@ export default {
         ecard: "",
         college: "",
         class: "",
-        inyear: ""
+        inyear: "",
+        education:''
       },
       realresults: this.$store.state.realresults,
       results: [],
@@ -138,7 +157,8 @@ export default {
             ecard: this.data.ecard,
             college: this.data.college,
             class: this.data.class,
-            inyear: this.data.inyear
+            inyear: this.data.inyear,
+            education:this.data.education
           }
         })
         .then(res => {
@@ -149,25 +169,23 @@ export default {
             // console.log(res[i]);
           }
           this.handleCurrentChange(1);
-          // console.log(res);
-          
+            // console.log(res);
         });
     }
   },
   created() {
-    // this.$axios.get("/api/phpvue/allsearch.php").then(res => {
-    //   console.log(res.data.length);
-    //   console.log(res);
-    //   for (let x in res.data) {
-    //     this.realresults.push(res.data[x]);
-    //     //  console.log(x);
-    //   }
+      // console.log(this.$store.state.identity);
+    
+      if(this.$store.state.identity=='student')
+        this.isstudent=true
+      else{
       for (
         let i = (this.currentpage - 1) * this.currentpagesize - 1;
         i < this.realresults.length && i < this.currentpagesize;
         i++
       ) {
         this.results.push(this.realresults[i]);
+      }
       }
       // this.results=[];
     // });
@@ -185,12 +203,12 @@ export default {
   /* border:1px solid red; */
   float: left;
   font-size: 20px;
-  height: 700px;
+  height: 800px;
 }
 .searchresults {
   margin-left: 450px;
   width: 65%;
   /* border:1px solid green; */
-  height: 700px;
+  height: 800px;
 }
 </style>
