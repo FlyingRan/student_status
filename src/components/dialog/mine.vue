@@ -7,6 +7,7 @@
         center
         :close-on-press-escape="false"
         :show-close="false"
+        :close-on-click-modal=false
       >
         <div style="font-size:25px;">
           <ul>
@@ -36,8 +37,8 @@
       >
         <div style="font-size:25px;">
           <ul>
-            <li>学院编号：{{$store.state.username}}</li>
-            <li>学院名称{{$store.state.college}}</li>
+            <li>学院编号:{{$store.state.username}}</li>
+            <li>学院名称:{{$store.state.college}}</li>
           </ul>
         </div>
         <div slot="footer" class="dialog-footer">

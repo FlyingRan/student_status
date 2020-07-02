@@ -6,6 +6,7 @@
         center
         :close-on-press-escape="false"
         :show-close="false"
+        :close-on-click-modal=false
       >
         <h3>检测到你的密码为初始密码，是否前往修改密码，以保证账号的安全?</h3>
         <div slot="footer" class="dialog-footer">

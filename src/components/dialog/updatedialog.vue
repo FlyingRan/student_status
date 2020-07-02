@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="学生学籍信息" :visible.sync="updatevisible" center :close-on-press-escape=false :show-close=false>
+  <el-dialog title="学生学籍信息" :visible.sync="updatevisible" center :close-on-press-escape=false :show-close=false :close-on-click-modal=false>
     <el-form :model="msg">
       <el-form-item label="学生学号" prop="sid">
         <el-input v-model="msg.sid" placeholder="请输入学号" :disabled="true"></el-input>

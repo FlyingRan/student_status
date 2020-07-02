@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="修改密码" :visible.sync="passvisible"  center  :close-on-press-escape=false :show-close=false>
+  <el-dialog title="修改密码" :visible.sync="passvisible"  center  :close-on-press-escape=false :show-close=false :close-on-click-modal=false>
     <el-form :model="password" :rules="rule"  class="demo-ruleForm"  ref="password" status-icon>
       <el-form-item label="原密码" prop="sid">
         <el-input type="password" v-model="password.oldpass" placeholder="请输入原来的密码"></el-input>

@@ -206,7 +206,7 @@ export default {
     //判断是否为初始密码
     // if(this.$store.password="123456"){
     // }
-    if(this.$store.state.state == '1' && this.$store.state.password == '123456'){
+    if(this.$store.state.state == '1' && this.$store.state.password == 'MTIzNDU2'){
       console.log('xx');
       this.advicevisible=true
     }

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="查看详情页" :visible.sync="visible" center :close-on-press-escape=false :show-close=false>
+  <el-dialog title="查看详情页" :visible.sync="visible" center :close-on-press-escape=false :show-close=false :close-on-click-modal=false>
     <div style="font-size:25px;">
       <ul>
         <li>学生学号：{{detaildata.sid}}</li>
