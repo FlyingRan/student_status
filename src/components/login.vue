@@ -113,7 +113,7 @@ export default {
               } else {
                 this.$message.error("服务器异常，请稍后再试");
               }
-              // console.log(res.data);
+              console.log(res.data);
             })
             .catch(err => {
               console.log("出错");
