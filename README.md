@@ -1,4 +1,4 @@
-# testelui
+# 学生学籍管理系统
 
 ## Project setup
 ```
@@ -14,6 +14,8 @@ npm run serve
 ```
 npm run build
 ```
+
+#### 后端接口Java编写
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
