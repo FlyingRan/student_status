@@ -96,7 +96,7 @@ export default {
   methods: {
     updatesearch() {
       this.$axios
-        .get("/api/phpvue/updatesearch.php", {
+        .get("/api/updateSearch", {
           params: {
             text: this.search
           }

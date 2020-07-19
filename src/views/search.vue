@@ -149,14 +149,14 @@ export default {
     },
     startsearch() {
       this.$axios
-        .get("/api/phpvue/singlesearch.php", {
+        .get("/api/singleSearch", {
           params: {
-            id: this.data.id,
+            sid: this.data.id,
             name: this.data.name,
             sex: this.data.sex,
             ecard: this.data.ecard,
             college: this.data.college,
-            class: this.data.class,
+            major_class:this.data.class,
             inyear: this.data.inyear,
             education:this.data.education
           }

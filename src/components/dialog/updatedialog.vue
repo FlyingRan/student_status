@@ -78,15 +78,13 @@ export default {
       this.$emit("changeupdate", !this.updatevisible);
       //发起修改请求
       this.$axios
-        .get("/api/phpvue/updatedata.php", {
+        .get("/api/updateStudent", {
           params: {
             sid: this.msg.sid,
             name: this.msg.name,
             sex: this.msg.sex,
             college: this.msg.college,
             major_class: this.msg.major_class,
-            inyear: this.msg.inyear,
-            ecard: this.msg.ecard
           }
         })
         .then(res => {

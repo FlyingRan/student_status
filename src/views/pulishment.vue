@@ -56,9 +56,9 @@ export default {
     inputchange(value) {
       // console.log(value);
       this.$axios
-        .get("/api/phpvue/pulishment.php", {
+        .get("/api/updateSearch", {
           params: {
-            sid: this.studentid1
+            text: this.studentid1
           }
         })
         .then(res => {
@@ -71,9 +71,9 @@ export default {
       // console.log(this.pulishment1);
 
       this.$axios
-        .get("/api/phpvue/addpulishment.php", {
+        .get("/api/addPunishment", {
           params: {
-            pulishment: this.pulishment1,
+            punishment: this.pulishment1,
             sid: this.studentid1
           }
         })
@@ -99,9 +99,9 @@ export default {
     },
     inputchange2(value) {
       this.$axios
-        .get("/api/phpvue/pulishment.php", {
+        .get("/api/updateSearch", {
           params: {
-            sid: this.studentid2
+            text: this.studentid2
           }
         })
         .then(res => {
@@ -110,10 +110,10 @@ export default {
     },
     backout() {
       this.$axios
-        .get("/api/phpvue/addpulishment.php", {
+        .get("/api/addPunishment", {
           params: {
             sid: this.studentid2,
-            pulishment: "有过处分，已撤销"
+            punishment: "有过处分，已撤销"
           }
         })
         .then(res => {

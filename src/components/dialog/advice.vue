@@ -40,10 +40,9 @@ export default {
             }
         },
         changestate(){
-            this.$axios.get('/api/phpvue/changestate.php',{
+            this.$axios.get('/api/changeState',{
                 params:{
                     sid:this.$store.state.username,
-                    identity:this.$store.state.identity
                 }
             }).then( res => {
                 console.log(res.data);

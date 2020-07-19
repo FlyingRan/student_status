@@ -18,7 +18,7 @@ export default {
     confirmdelete() {
       this.$emit("deleteclose", !this.deletevisible);
 
-      this.$axios.get('/api/phpvue/deletestudent.php',{
+      this.$axios.get('/api/deleteStudent',{
           params:{
               sid:this.deletedata.sid
           }

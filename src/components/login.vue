@@ -88,7 +88,7 @@ export default {
 
           this.$axios
             .post(
-              "/api/phpvue/login.php",
+              "/api/login",
               this.$qs.stringify({
                 username: this.logindata.username,
                 password: this.logindata.password,
@@ -97,10 +97,10 @@ export default {
             )
             .then(res => {
               if (res.status == 200) {
-                if (res.data == 0) {
+                if (res.data == "error") {
                   this.$message.error("用户名或者密码错误，再想想吧！");
                 } else {
-                  console.log(res.data);
+                  console.log(res);
                   this.$store.commit({
                     type: "changeuser",
                     data: res.data,
@@ -113,7 +113,7 @@ export default {
               } else {
                 this.$message.error("服务器异常，请稍后再试");
               }
-              console.log(res.data);
+              // console.log(res.data);
             })
             .catch(err => {
               console.log("出错");

@@ -127,7 +127,7 @@ export default {
       if (this.$store.state.college == astudent.college || this.$store.state.identity=='admin') {
         //通过axios发送添加请求
         this.$axios
-          .get("/api/phpvue/addstudent.php", {
+          .get("/api/addStudent", {
             params: {
               sid: this.addmsg.sid,
               name: this.addmsg.name,

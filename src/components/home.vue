@@ -210,7 +210,7 @@ export default {
       console.log('xx');
       this.advicevisible=true
     }
-    this.$axios.get("/api/phpvue/allsearch.php").then(res => {
+    this.$axios.get("/api/allSearch").then(res => {
       // console.log(res.data.length);
       // console.log(res);
       // for (let x in res.data) {
